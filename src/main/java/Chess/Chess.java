@@ -14,13 +14,60 @@ public class Chess {
     }
     
     public void play(Scanner scanner) {
-        /* Your code here */
+      System.out.println(" Welcome to Chess");
+String prompt = " Please select a mode. (1) player or (2) player:"; 
+      int selection = InputHelper.getValidNumberInput(scanner, prompt, 1, 2);
+      if(selection == 1){
+        while(!this.hasWinner()){
+          this.displayBoard();
+          prompt = " Please indicate a piece to move. Row:";
+          rowSelection1 = InputHelper.getValidNumberInput(scanner, prompt, 0, 7);
+          prompt = " you have selected row " +  rowSelection1 + "Col:";
+          colSelection1 = InputHelper.getValidNumberInput(scanner, prompt, 0, 7);
+          if(this.board[rowSelection1][colSelection1] == null){
+           System.out.println(" You selected an empty square. Please try again");
+            prompt = " Please indicate a piece to move. Row:";
+          rowSelection1 = InputHelper.getValidNumberInput(scanner, prompt, 0, 7);
+          prompt = " you have selected row " +  rowSelection1 + "Col:";
+          colSelection1 = InputHelper.getValidNumberInput(scanner, prompt, 0, 7);
+          }
+          System.out.println(" You have selected the" + this.board[rowSelection1][colSelection1].toString() + " at [" + rowSelection1 + "],[" + colSelection1 + "]");
+          prompt =" Please indicate a square to move to. Row:";
+   rowSelection2 = InputHelper.getValidNumberInput(scanner, prompt, 0, 7); 
+          System.out.println(" You have selected to move to row " + rowSelection2);
+prompt = "Please select a column to move to: "; 
+          colSelection2 = InputHelper.getValidNumberInput(scanner, prompt, 0, 7); 
+          if(!this.board[rowSelection1][colSelection1].canMoveTo(rowSelection2, colSelection2)){
+          System.out.println(" That is an invalid move. Please try again.");
+            prompt =" Please indicate a square to move to. Row:";
+   rowSelection2 = InputHelper.getValidNumberInput(scanner, prompt, 0, 7); 
+          System.out.println(" You have selected to move to row " + rowSelection2);
+prompt = "Please select a column to move to: "; 
+          colSelection2 = InputHelper.getValidNumberInput(scanner, prompt, 0, 7); 
+          }
+        }
+      }
+      else if(selection == 2){
+        
+      }
     }
 
     public static boolean hasWinner(ChessPiece[][] board) {
-        /* Your code here */
-    }
-    
+      int kings = 0;
+      for(int i = 0; i < board.length;i++){
+        for(int j = 0;  j < board[i].length;j++){
+          if(board[i][j].toString().equals("K") || board[i][j].toString().equals("k") ){
+            kings++;
+          }
+        }
+      }
+      if(kings == 1){
+        return true;
+      }
+      else{
+        return false;
+        }
+      }
     public void initializeBoard() {
         board = new ChessPiece[8][8];
         
